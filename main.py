@@ -31,17 +31,15 @@ def get_page_context(query: str) -> str:
 
 
 @mcp.tool()
-def search_ooai_content(url: str, query: str) -> str:  # Removed async
+def search_content(query: str) -> str:  # Removed async
     """
     Search content on oo.ai using the provided query.
     Args:
-        url (str): The URL to search (Note: This parameter seems unused in the
-            original logic, keeping for compatibility).
         query (str): The search query.
     Returns:
         str: The HTML content of the search results page.
     Example:
-        search_ooai_content("https://oo.ai", "example query")
+        search_ooai_content("example query")
     """
     # Directly call the synchronous search function
     return ooai_search(query)
