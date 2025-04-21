@@ -37,6 +37,7 @@ print(result)
 2. Install the package:
 
    ```bash
+   uv venv
    uv pip install .
    playwright install chromium
    ```
