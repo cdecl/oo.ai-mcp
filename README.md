@@ -1,4 +1,6 @@
-# oo
+# oo.ai-mcp
+
+## Introduction
 
 This project provides a tool to search content on oo.ai.
 
@@ -57,8 +59,17 @@ To use this tool as an MCP server, register it in your MCP configuration with th
 
 ```json
 {
-  "name": "oo.ai-mcp",
-  "command": "uv run --directory /Users/cdecl/Downloads/oo src/main.py"
+  "mcpServers": {
+    "oo.ai-mcp": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "/path_to_ooai",
+        "ooai"
+      ]
+    }
+  }
 }
 ```
 
