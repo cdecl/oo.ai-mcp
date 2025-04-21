@@ -36,6 +36,7 @@ print(result)
 
    ```bash
    uv pip install .
+   playwright install chromium
    ```
 
 3. Sync the dependencies:
