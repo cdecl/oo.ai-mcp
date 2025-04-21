@@ -31,7 +31,7 @@ print(result)
 
    ```bash
    git clone https://github.com/cdecl/oo.ai-mcp
-   cd oo
+   cd oo.ai-mcp
    ```
 
 2. Install the package:
@@ -50,7 +50,7 @@ print(result)
 ## Running the server
 
 ```bash
-uv run oo
+uv run ooai
 ```
 
 ## MCP Server Registration
@@ -65,7 +65,7 @@ To use this tool as an MCP server, register it in your MCP configuration with th
       "args": [
         "run",
         "--directory",
-        "/path_to_ooai",
+        "/path_to_oo.ai-mcp",
         "ooai"
       ]
     }
