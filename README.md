@@ -77,5 +77,5 @@ To use this tool as an MCP server, register it in your MCP configuration with th
 ## Testing
 
 ```bash
-pytest
+uv run pytest -v
 ```
