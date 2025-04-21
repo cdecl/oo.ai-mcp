@@ -1,37 +1,40 @@
-from playwright.sync_api import sync_playwright
+from playwright.async_api import async_playwright  # Changed to async_api
 from fastmcp import FastMCP
 from markitdown import MarkItDown
 import io
+import asyncio
+# Removed unused asyncio import
 
 
 mcp = FastMCP("oo.ai-mcp")
 
 
-def ooai_search(query: str) -> str:
+async def ooai_search(query: str) -> str:  # Changed to async def
     """Fetches HTML content from oo.ai search results page."""
-    with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+    async with async_playwright() as p:  # Changed to async_playwright
+        browser = await p.chromium.launch(headless=True)  # Added await
+        page = await browser.new_page()  # Added await
 
         url = f"https://oo.ai/search?q={query}"
-        page.goto(url, wait_until="networkidle")
+        await page.goto(url, wait_until="networkidle")  # Added await
 
-        content = page.content()
-        browser.close()
+        content = await page.content()  # Added await
+        await browser.close()  # Added await
         return content
 
 
-def get_page_context(query: str) -> str:
-    content = ooai_search(query)
+async def get_page_context(query: str) -> str:  # Changed to async def
+    content = await ooai_search(query)  # Added await
     md = MarkItDown()
 
     html_stream = io.BytesIO(content.encode('utf-8'))
+    # MarkItDown might not be async, assuming convert_stream is sync
     result = md.convert_stream(html_stream, format='html')
     return result
 
 
 @mcp.tool()
-def search_content(query: str) -> str:  # Removed async
+async def search_ooai(query: str) -> str:  # Changed to async def
     """
     Search content on oo.ai using the provided query.
     Args:
@@ -39,11 +42,13 @@ def search_content(query: str) -> str:  # Removed async
     Returns:
         str: The HTML content of the search results page.
     Example:
-        search_ooai_content("example query")
+        search_ooai("example query")
     """
-    # Directly call the synchronous search function
-    return ooai_search(query)
+    # Call the asynchronous search function
+    return await get_page_context(query)  # Added await
 
 
 if __name__ == "__main__":
-    mcp.run()
+    # FastMCP's run method likely handles the asyncio event loop
+    # mcp.run()
+    asyncio.run(mcp.run())  # Added asyncio.run
